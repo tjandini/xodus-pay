@@ -20,7 +20,6 @@ function AIChat() {
     setInput('')
     setMessages(prev => [...prev, { role: 'user', content: userMessage }])
     setLoading(true)
-
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -37,12 +36,11 @@ function AIChat() {
 
   return (
     <>
-      {/* Chat Window */}
       {open && (
         <div className="fixed bottom-24 right-6 w-80 bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 z-50 flex flex-col" style={{ height: '420px' }}>
           <div className="flex justify-between items-center p-4 border-b border-gray-700">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-black font-bold text-sm">AI</div>
+              <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-black font-bold text-sm">XP</div>
               <div>
                 <p className="font-bold text-white text-sm">Xodus AI Assistant</p>
                 <p className="text-green-400 text-xs">Online</p>
@@ -50,32 +48,23 @@ function AIChat() {
             </div>
             <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white text-xl">✕</button>
           </div>
-
           <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-xs px-3 py-2 rounded-xl text-sm ${
-                  msg.role === 'user' ? 'bg-teal-500 text-black' : 'bg-gray-800 text-white'
-                }`}>
+                <div className={`max-w-xs px-3 py-2 rounded-xl text-sm ${msg.role === 'user' ? 'bg-teal-500 text-black' : 'bg-gray-800 text-white'}`}>
                   {msg.content}
                 </div>
               </div>
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-gray-800 px-3 py-2 rounded-xl text-sm text-gray-400">
-                  Thinking...
-                </div>
+                <div className="bg-gray-800 px-3 py-2 rounded-xl text-sm text-gray-400">Thinking...</div>
               </div>
             )}
           </div>
-
           <div className="p-3 border-t border-gray-700 flex gap-2">
-            <input
-              type="text"
-              placeholder="Ask me anything..."
-              value={input}
-              onChange={e => setInput(e.target.value)}
+            <input type="text" placeholder="Ask me anything..."
+              value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               className="flex-1 px-3 py-2 bg-gray-800 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:ring-2 focus:ring-teal-500"
             />
@@ -86,8 +75,6 @@ function AIChat() {
           </div>
         </div>
       )}
-
-      {/* Chat Bubble */}
       <button onClick={() => setOpen(!open)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center shadow-2xl hover:bg-teal-400 z-50 text-2xl">
         {open ? '✕' : '🤖'}
@@ -99,6 +86,10 @@ function AIChat() {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2314b8a6'/><text y='.9em' font-size='70' x='50%' text-anchor='middle' font-weight='bold' fill='black'>X</text></svg>" />
+        <title>Xodus Pay</title>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
         <AIChat />
